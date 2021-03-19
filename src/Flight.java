@@ -4,13 +4,15 @@ public class Flight { //this is similar to Java's Edge class
 	int flightNum;
 	Airport source; //where flight departs from
 	Airport dest;	// where flight lands
+	int cost;
 	int depTime;	// departure time (minutes)
 	int travelTime; // time of arrival (minutes)
 	
-	public Flight(int flightNum, Airport source, Airport dest, int depTime, int arrTime) {
+	public Flight(int flightNum, Airport source, Airport dest, int cost, int depTime, int arrTime) {
 		this.flightNum = flightNum;
 		this.source = source;
 		this.dest = dest;
+		this.cost = cost;
 		this.depTime = depTime;
 		this.travelTime = arrTime;
 	}
@@ -58,6 +60,14 @@ public class Flight { //this is similar to Java's Edge class
 
 	public void setTravelTime(int travelTime) {
 		this.travelTime = travelTime;
+	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
 	}
 	
 	
