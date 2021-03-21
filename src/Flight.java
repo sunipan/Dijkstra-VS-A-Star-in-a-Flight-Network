@@ -1,12 +1,16 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Flight { //this is similar to Java's Edge class
 	
-	int flightNum;
-	Airport source; //where flight departs from
-	Airport dest;	// where flight lands
-	int cost;		// cost of the flight
-	int depTime;	// departure time (minutes)
-	int travelTime; // time taken to reach destination (minutes)
+	private Airport source; //where flight departs from
+	private Airport dest;	// where flight lands
+	private Airline airline;
+	private int cost;		// cost of the flight
+	private int depTime;	// departure time (minutes)
+	private int travelTime; // time taken to reach destination (minutes)
 	
 	//Used for testing the order of the priority queue by cost
 	public Flight(int cost) {
@@ -14,28 +18,10 @@ public class Flight { //this is similar to Java's Edge class
 	}
 	
 	// Used for testing
-	public Flight(Airport source, Airport dest, int cost) {
+	public Flight(Airport source, Airport dest, Airline airline) {
 		this.source = source;
 		this.dest = dest;
-		this.cost = cost;
-	}
-	
-	// Main constructor, possibly too many attributes
-	public Flight(int flightNum, Airport source, Airport dest, int cost, int depTime, int travelTime) {
-		this.flightNum = flightNum;
-		this.source = source;
-		this.dest = dest;
-		this.cost = cost;
-		this.depTime = depTime;
-		this.travelTime = travelTime;
-	}
-
-	public int getFlightNum() {
-		return flightNum;
-	}
-
-	public void setFlightNum(int flightNum) {
-		this.flightNum = flightNum;
+		this.airline = airline;
 	}
 
 	public Airport getSource() {
@@ -77,5 +63,28 @@ public class Flight { //this is similar to Java's Edge class
 	public void setTravelTime(int travelTime) {
 		this.travelTime = travelTime;
 	}
+
+	public void display(){
+		System.out.println("Airline: " + this.airline.getName());
+		System.out.println("Destination: " + this.dest.getCity());
+	}
+
+	public static ArrayList<String[]> getFlights(){
+        ArrayList<String[]> flightList = new ArrayList<String[]>();
+
+        try {
+            Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\routes.data"));
+            sc.useDelimiter(","); 
+
+            while (sc.hasNext())  
+            {  
+                flightList.add(sc.nextLine().split(","));
+            }   
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }  
+
+        return flightList;
+    }
 
 }
