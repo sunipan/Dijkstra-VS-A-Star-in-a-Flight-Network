@@ -5,18 +5,14 @@ import java.util.Scanner;
 
 public class FlightNetworkGenerator {
 
-    public FlightNetworkGenerator(){
-
-    }
-
-    public void createCanadaGraph(boolean printStatistics){
-        int routeCounter = 0;
+    public static FlightNetwork createCanadaGraph(boolean printStatistics){
 
         ArrayList<String[]> airportList = Airport.getAirports();
         ArrayList<String[]> flightList = Flight.getFlights();
         ArrayList<Airline> airlineList = Airline.getAirlines();
 
         ArrayList<Airport> airportNetwork = new ArrayList<Airport>();
+        ArrayList<Flight> flightNetwork = new ArrayList<Flight>();
 
         for (String[] ap : airportList){
             if (ap[3].equals("Canada") && !ap[4].equals("\\N")){
@@ -39,24 +35,37 @@ public class FlightNetworkGenerator {
                     System.out.println(airline);
                 }
                 
-                Flight flight = new Flight(s_ap, d_ap, ar);
-
-                s_ap.addRoute(flight);
-                routeCounter++;
+                Flight flightTo = new Flight(s_ap, d_ap, ar);
+                flightNetwork.add(flightTo);
+                s_ap.addRoute(flightTo);
             }  
         }
+
+        //remove airports without routes
+        for (int i = 0; i < airportNetwork.size(); i++){
+            if (airportNetwork.get(i).getOutgoingFlights().size() == 0){
+                airportNetwork.remove(i);
+            }
+        }
+
+        FlightNetwork fn = new FlightNetwork(airportNetwork, flightNetwork);
     
         if (printStatistics) {
             System.out.println("Network Constructed");
             System.out.println("Number of airports: " + airportNetwork.size());
-            System.out.println("Number of routes: " + routeCounter);
+            System.out.println("Number of routes: " + flightNetwork.size());
             System.out.println("================================================");
             System.out.println("Sample Airport: ");
-            airportNetwork.get(25).display();
+
+            airportNetwork.get(32).display();
+            airportNetwork.get(18).display();
+
         }
+
+        return fn;
     }
 
-    private boolean airportExists(ArrayList<Airport> airportNetwork, String IATACode){
+    private static boolean airportExists(ArrayList<Airport> airportNetwork, String IATACode){
         for (Airport ap : airportNetwork){
             if (ap.getIATACode().equals(IATACode)){
                 return true;
@@ -65,7 +74,7 @@ public class FlightNetworkGenerator {
         return false;
     }
 
-    private Airport findAirport(ArrayList<Airport> airportNetwork, String IATACode){
+    private static Airport findAirport(ArrayList<Airport> airportNetwork, String IATACode){
         for (Airport ap : airportNetwork){
             if (ap.getIATACode().equals(IATACode)){
                 return ap;
@@ -74,7 +83,7 @@ public class FlightNetworkGenerator {
         return null;
     }
 
-    private Airline findAirline(ArrayList<Airline> airlineList, String IATACode){
+    private static Airline findAirline(ArrayList<Airline> airlineList, String IATACode){
         for (Airline ar : airlineList){
             if (ar.getCode().equals(IATACode) || ar.getCode().equals(IATACode)){
                 return ar;

@@ -65,8 +65,7 @@ public class Flight { //this is similar to Java's Edge class
 	}
 
 	public void display(){
-		System.out.println("Airline: " + this.airline.getName());
-		System.out.println("Destination: " + this.dest.getCity());
+		System.out.println("Airline: " + this.airline.getName() + " | Destination: " + this.dest.getCity());
 	}
 
 	public static ArrayList<String[]> getFlights(){

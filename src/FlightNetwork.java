@@ -5,10 +5,22 @@ public class FlightNetwork {
     private Airport start;
     private Airport end;
 
-    private ArrayList<Airport> airportNetwork;
+    private int airportCount;
+    private int flightCount;
 
-    public FlightNetwork(ArrayList<Airport> apNetwork) {
-        this.airportNetwork = apNetwork;
+    private ArrayList<Airport> airportNetwork;
+    private ArrayList<Flight> flightNetwork;
+
+    public FlightNetwork(ArrayList<Airport> airportNetwork, ArrayList<Flight> flightNetwork) {
+        this.airportNetwork = airportNetwork;
+        this.flightNetwork = flightNetwork;
+
+        this.airportCount = airportNetwork.size();
+        this.flightCount = flightNetwork.size();
+    }
+
+    public ArrayList<Airport> getAirportNetwork() {
+        return this.airportNetwork;
     }
 
     public void addAirport(Airport airport){
@@ -16,8 +28,6 @@ public class FlightNetwork {
     }
 
     public void addRoute(String A1_IATACode, String A2_IATACode){
-        Airport a1 = airportNetwork.get(indexOfAirport(A1_IATACode));
-        Airport a2 = airportNetwork.get(indexOfAirport(A2_IATACode));
  
     }
 
