@@ -4,12 +4,17 @@ public class testFlightNetwork {
 		
 		
 		FlightNetworkGenerator networkGen = new FlightNetworkGenerator();
-        FlightNetwork canNetwork = networkGen.createCanadaGraph(true);
+    FlightNetwork canNetwork = networkGen.createCanadaGraph(true);
 
-        //FlightNetwork.printNetworkAirports(start);
+    //FlightNetwork.printNetworkAirports(start);
 
-        Airport ar = canNetwork.findAirport("YEG");
+    Airport ar = canNetwork.findAirport("YEG");
 
-        ar.getOutgoingFlights().get(0).getDest().getOutgoingFlights().get(0).display();
+    ar.getOutgoingFlights().get(0).getDest().getOutgoingFlights().get(0).display();
+
+
+      
+
+
 	}
 }
