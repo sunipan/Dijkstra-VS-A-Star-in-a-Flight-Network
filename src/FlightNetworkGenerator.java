@@ -35,7 +35,11 @@ public class FlightNetworkGenerator {
                     System.out.println(airline);
                 }
                 
-                Flight flightTo = new Flight(s_ap, d_ap, ar);
+                Flight flightTo = new Flight(s_ap, d_ap, ar, getMorningTime());
+                flightNetwork.add(flightTo);
+                s_ap.addRoute(flightTo);
+
+                flightTo = new Flight(s_ap, d_ap, ar, getEveningTime());
                 flightNetwork.add(flightTo);
                 s_ap.addRoute(flightTo);
             }  
@@ -63,6 +67,14 @@ public class FlightNetworkGenerator {
         }
 
         return fn;
+    }
+
+    private static int getMorningTime(){
+        return (int)(420 + (Math.random() * 360));
+    }
+
+    private static int getEveningTime(){
+        return (int)(780 + (Math.random() * 540));
     }
 
     private static boolean airportExists(ArrayList<Airport> airportNetwork, String IATACode){

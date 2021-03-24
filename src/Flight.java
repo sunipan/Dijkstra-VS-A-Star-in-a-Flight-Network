@@ -28,6 +28,16 @@ public class Flight { //this is similar to Java's Edge class
 		calculateCost();
 	}
 
+	public Flight(Airport source, Airport dest, Airline airline, int depTime) {
+		this.source = source;
+		this.dest = dest;
+		this.airline = airline;
+		this.depTime = depTime;
+
+		calculateTravelTime();
+		calculateCost();
+	}
+
 	private void calculateCost() {
 		this.cost = (int)(this.travelDistance *  (0.30 + ((Math.random() - 0.5) * 0.1)));
 	}
@@ -74,7 +84,8 @@ public class Flight { //this is similar to Java's Edge class
 
 	public void display(){
 		System.out.println("Airline: " + this.airline.getName() + " | Destination: " + this.dest.getCity());
-		System.out.println("Distance: " + this.travelDistance + " | Time: " + this.travelTime + " | Cost: $" + this.cost);
+		//System.out.println("Distance: " + this.travelDistance + " | Time: " + this.travelTime + " | Cost: $" + this.cost);
+		System.out.println("Departure time: " + this.depTime);
 	}
 
 	public static ArrayList<String[]> getFlights(){
