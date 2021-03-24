@@ -15,7 +15,7 @@ public class Airport {
 	private String IATACode;
 
 	private int tripCost;  // this is how much it cost to reach this node from source node
-	private ArrayList<Flight> departures;	// A priority queue object of this airports outgoing flights in natural order by cost
+	private ArrayList<Flight> departures;	
 	
 
 	// Empty constructor for testing
@@ -119,5 +119,13 @@ public class Airport {
 		}  
 
 		return airportList;
+	}
+
+	public double getLatitude(){
+		return this.latitude;
+	}
+
+	public double getLongitude(){
+		return this.longitude;
 	}
 }

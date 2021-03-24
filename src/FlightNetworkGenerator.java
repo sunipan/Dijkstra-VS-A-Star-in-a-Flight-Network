@@ -16,7 +16,7 @@ public class FlightNetworkGenerator {
 
         for (String[] ap : airportList){
             if (ap[3].equals("Canada") && !ap[4].equals("\\N")){
-                Airport newAP = new Airport(ap[1], ap[2], ap[3], ap[4], Double.parseDouble(ap[6]), Double.parseDouble(ap[7]));
+                Airport newAP = new Airport(ap[1], ap[2], ap[3], ap[4], Double.parseDouble(ap[6]), -Double.parseDouble(ap[7]));
                 airportNetwork.add(newAP);
             }
         } 

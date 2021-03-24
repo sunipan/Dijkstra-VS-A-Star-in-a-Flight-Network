@@ -11,6 +11,7 @@ public class Flight { //this is similar to Java's Edge class
 	private int cost;		// cost of the flight
 	private int depTime;	// departure time (minutes)
 	private int travelTime; // time taken to reach destination (minutes)
+	private int travelDistance;	// distance
 	
 	//Used for testing the order of the priority queue by cost
 	public Flight(int cost) {
@@ -22,6 +23,13 @@ public class Flight { //this is similar to Java's Edge class
 		this.source = source;
 		this.dest = dest;
 		this.airline = airline;
+
+		calculateTravelTime();
+		calculateCost();
+	}
+
+	private void calculateCost() {
+		this.cost = (int)(this.travelDistance *  (0.30 + ((Math.random() - 0.5) * 0.1)));
 	}
 
 	public Airport getSource() {
@@ -66,6 +74,7 @@ public class Flight { //this is similar to Java's Edge class
 
 	public void display(){
 		System.out.println("Airline: " + this.airline.getName() + " | Destination: " + this.dest.getCity());
+		System.out.println("Distance: " + this.travelDistance + " | Time: " + this.travelTime + " | Cost: $" + this.cost);
 	}
 
 	public static ArrayList<String[]> getFlights(){
@@ -85,5 +94,25 @@ public class Flight { //this is similar to Java's Edge class
 
         return flightList;
     }
+
+	private void calculateTravelTime(){
+		double lat1 = Math.toRadians(this.source.getLatitude());
+		double lon1 = Math.toRadians(this.source.getLongitude());
+
+		double lat2 = Math.toRadians(this.dest.getLatitude());
+		double lon2 = Math.toRadians(this.dest.getLongitude());
+
+		this.travelDistance = (int)Math.abs(greatCircle(lat1, lat2, lon1, lon2));
+		this.travelTime = (int)Math.round(this.travelDistance * (60 / 1046.0)); //average airspeed of a 737
+	}
+
+	private double greatCircle(double lat1, double lat2, double lon1, double lon2){
+		double earthRadius = 6371.009;
+
+		
+		double arcLength = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
+
+		return 6371.009 * arcLength;
+	}
 
 }
