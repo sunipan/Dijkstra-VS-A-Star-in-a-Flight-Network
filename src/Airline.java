@@ -35,23 +35,24 @@ public class Airline {
         ArrayList<Airline> airlineList = new ArrayList<Airline>();
 
         try {
-            Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airline.data"));
-            sc.useDelimiter(","); 
+    			  Scanner sc = new Scanner(new File("network-data\\airline.data"));
+            //Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airline.data"));
+            sc.useDelimiter(",");
 
-            while (sc.hasNext())  
-            {  
+            while (sc.hasNext())
+            {
                 String[] airlineData = sc.nextLine().split(",");
 
                 if (!airlineData[7].equals("N")){
                     Airline airline = new Airline(airlineData[1], airlineData[2], airlineData[3], airlineData[5], airlineData[6]);
                     airlineList.add(airline);
                 }
-            }   
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }  
+        }
 
-        return airlineList;  
+        return airlineList;
     }
-    
+
 }

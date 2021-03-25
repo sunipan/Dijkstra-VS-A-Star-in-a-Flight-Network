@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Airport {
-	
+
 	private String name;
 	private String city;
 	private String country;
@@ -15,14 +15,15 @@ public class Airport {
 	private String IATACode;
 
 	private int tripCost;  // this is how much it cost to reach this node from source node
-	private ArrayList<Flight> departures;	
-	
+	private ArrayList<Flight> departures;
+	private Airport previous = null;
+
 
 	// Empty constructor for testing
 	public Airport(int tripCost) {
 		this.tripCost = tripCost;
 	}
-	
+
 	// Constructor used for graph if needed
 	public Airport(String name, String city, String country, String IATACode, double latitude, double longitude) {
 		this.name = name;
@@ -107,16 +108,17 @@ public class Airport {
 		ArrayList<String[]> airportList = new ArrayList<String[]>();
 
 		try {
-			Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airports.data"));
-			sc.useDelimiter(","); 
+			Scanner sc = new Scanner(new File("network-data\\airports.data"));
+			//Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airports.data"));
+			sc.useDelimiter(",");
 
-			while (sc.hasNext())  
-			{  
+			while (sc.hasNext())
+			{
 				airportList.add(sc.nextLine().split(","));
-			}   
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}  
+		}
 
 		return airportList;
 	}
@@ -127,5 +129,12 @@ public class Airport {
 
 	public double getLongitude(){
 		return this.longitude;
+	}
+
+	public Airport getPrevious() {
+		return this.previous;
+	}
+	public void setPrevious(Airport prev) {
+		this.previous = prev;
 	}
 }
