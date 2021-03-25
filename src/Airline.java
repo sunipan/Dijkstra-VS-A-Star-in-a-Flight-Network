@@ -46,7 +46,7 @@ public class Airline {
                 String[] airlineData = row.split(",");
                 //String[] airlineData = sc.nextLine().split(",");
                 if (!airlineData[7].equals("N")){
-                    System.out.println(airlineData[0]);
+                    //System.out.println(airlineData[0]);
                     Airline airline = new Airline(airlineData[1], airlineData[2], airlineData[3], airlineData[5], airlineData[6]);
                     airlineList.add(airline);
                 }

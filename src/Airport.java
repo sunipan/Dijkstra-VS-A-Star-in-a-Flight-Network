@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -108,18 +107,24 @@ public class Airport {
 		ArrayList<String[]> airportList = new ArrayList<String[]>();
 
 		try {
-			Scanner sc = new Scanner(new File("network-data\\airports.data"));
+			//Scanner sc = new Scanner(new File("network-data\\airports.data"));
 			//Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airports.data"));
-			sc.useDelimiter(",");
-
-			while (sc.hasNext())
+			//sc.useDelimiter(",");
+			BufferedReader csvReader = new BufferedReader(new FileReader("network-data\\airports.data"));
+			String row;
+			//while (sc.hasNext())
+			while ((row = csvReader.readLine()) != null)
 			{
-				airportList.add(sc.nextLine().split(","));
+				//System.out.println(row);
+				airportList.add(row.split(","));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (IOException ioe) {
+				ioe.printStackTrace();
 		}
 
+		System.out.println("Airport list size: " + airportList.size());
 		return airportList;
 	}
 
