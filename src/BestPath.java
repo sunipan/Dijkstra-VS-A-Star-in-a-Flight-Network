@@ -1,15 +1,17 @@
+import java.util.*;
 
 public class BestPath {
 
   //to be changed when graph is added
   //FlightNetwork flightNetwork = new FlightNetwork(...);
-  public int infinity = Integer.MAX_VALUE;
-  public ArrayList<Airport> bestRoute = new ArrayList<Airport>();
-  public Comparator<Airport> comparator = new CostComparator();
-  public PriorityQueue<Airport> pq = new PriorityQueue<>(numAirports, comparator);
+  private static  int infinity = Integer.MAX_VALUE;
+  private static ArrayList<Airport> bestRoute = new ArrayList<Airport>();
+  private static Comparator<Airport> comparator = new CostComparator();
+  private static PriorityQueue<Airport> pq;
 
 
-  public void bestPath(/*graph*/ Airport src, Airport target) {
+  public static void bestPath(ArrayList<Airport> graph, Airport src, Airport target) {
+    pq = new PriorityQueue<>(graph.size(), comparator);
     src.setTripCost(0);
     pq.add(src);
     for (Airport current: graph) {
@@ -20,9 +22,9 @@ public class BestPath {
       }
     }
     Airport min;
-    Flight[] flightsFromMin;
+    ArrayList<Flight> flightsFromMin;
     while(pq.peek() != null) {
-      min = pq.pop();
+      min = pq.poll();
       flightsFromMin = min.getOutgoingFlights();
       int tempCost;
       for (Flight flight: flightsFromMin) {
@@ -30,6 +32,7 @@ public class BestPath {
         if (tempCost < flight.getDest().getTripCost()) {
           flight.getDest().setTripCost(tempCost);
           //set previous of flights destination to min.
+          flight.getDest().setPrevious(min);
         }
         if (flight.getDest() == target) break;
       }
@@ -43,14 +46,22 @@ public class BestPath {
     String srcCode = sc.nextLine();
     System.out.print("Enter the IATACode of the destination airport: ");
     String destCode = sc.nextLine();
+    FlightNetworkGenerator fng = new FlightNetworkGenerator();
+    FlightNetwork flightNetwork = fng.createCanadaGraph(true);
+
 
     Airport source = flightNetwork.findAirport(srcCode);
     Airport destination = flightNetwork.findAirport(destCode);
 
     //made bestPath not return anything, if Airport has a previous
     //it can be used like a backwards linked list from destination
-    bestPath(flightNetwork, source, destination);
-    
+    bestPath(flightNetwork.getAirportNetwork(), source, destination);
+    Airport current = destination;
+    System.out.print("Trip outline, to get to destination: ");
+    while (current.getPrevious() != null) {
+      System.out.println(current.getIATACode());
+      current = current.getPrevious();
+    }
   }
 
 }
