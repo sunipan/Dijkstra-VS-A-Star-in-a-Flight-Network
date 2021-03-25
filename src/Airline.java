@@ -42,7 +42,7 @@ public class Airline {
             while (sc.hasNext())
             {
                 String[] airlineData = sc.nextLine().split(",");
-
+                System.out.println(airlineData[0]);
                 if (!airlineData[7].equals("N")){
                     Airline airline = new Airline(airlineData[1], airlineData[2], airlineData[3], airlineData[5], airlineData[6]);
                     airlineList.add(airline);

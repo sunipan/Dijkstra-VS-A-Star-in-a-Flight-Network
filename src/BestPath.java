@@ -7,11 +7,11 @@ public class BestPath {
   private static  int infinity = Integer.MAX_VALUE;
   private static ArrayList<Airport> bestRoute = new ArrayList<Airport>();
   private static Comparator<Airport> comparator = new CostComparator();
-  private static PriorityQueue<Airport> pq;
-
+  //private static PriorityQueue<Airport> pq = new PriorityQueue<Airport>(graph.size(), comparator);
 
   public static void bestPath(ArrayList<Airport> graph, Airport src, Airport target) {
-    pq = new PriorityQueue<>(graph.size(), comparator);
+
+    PriorityQueue<Airport> pq = new PriorityQueue<Airport>(11, comparator);
     src.setTripCost(0);
     pq.add(src);
     for (Airport current: graph) {
@@ -47,7 +47,7 @@ public class BestPath {
     System.out.print("Enter the IATACode of the destination airport: ");
     String destCode = sc.nextLine();
     FlightNetworkGenerator fng = new FlightNetworkGenerator();
-    FlightNetwork flightNetwork = fng.createCanadaGraph(true);
+    FlightNetwork flightNetwork = fng.createCanadaGraph(false);
 
 
     Airport source = flightNetwork.findAirport(srcCode);
