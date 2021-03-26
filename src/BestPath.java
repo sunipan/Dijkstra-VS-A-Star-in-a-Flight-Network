@@ -2,7 +2,6 @@ import java.util.*;
 
 public class BestPath {
 
-  //to be changed when graph is added
   //FlightNetwork flightNetwork = new FlightNetwork(...);
   private static  int infinity = Integer.MAX_VALUE;
   private static ArrayList<Airport> bestRoute = new ArrayList<Airport>();
@@ -47,15 +46,21 @@ public class BestPath {
     System.out.print("Enter the IATACode of the destination airport: ");
     String destCode = sc.nextLine();
     FlightNetworkGenerator fng = new FlightNetworkGenerator();
-    FlightNetwork flightNetwork = fng.createCanadaGraph(false);
-
+    FlightNetwork flightNetwork = fng.createCanadaGraph(true);
+    //9666,Virgin Pacific,,VH,VNP,,Fiji,Y
 
     Airport source = flightNetwork.findAirport(srcCode);
     Airport destination = flightNetwork.findAirport(destCode);
 
     //made bestPath not return anything, if Airport has a previous
     //it can be used like a backwards linked list from destination
-    bestPath(flightNetwork.getAirportNetwork(), source, destination);
+    if (source != null && destination != null) {
+      bestPath(flightNetwork.getAirportNetwork(), source, destination);
+    } else if (source == null) {
+      System.out.println("source was null");
+    } else if (destination == null) {
+      System.out.println("destination was null");
+    }
     Airport current = destination;
     System.out.print("Trip outline, to get to destination: ");
     while (current.getPrevious() != null) {

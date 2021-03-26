@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;  
+import java.util.Scanner;
 
 public class FlightNetworkGenerator {
 
@@ -19,7 +19,7 @@ public class FlightNetworkGenerator {
                 Airport newAP = new Airport(ap[1], ap[2], ap[3], ap[4], Double.parseDouble(ap[6]), -Double.parseDouble(ap[7]));
                 airportNetwork.add(newAP);
             }
-        } 
+        }
 
         for (String[] fl : flightList){
             String sourceAirportCode = fl[2];
@@ -34,7 +34,7 @@ public class FlightNetworkGenerator {
                 if (ar == null){
                     System.out.println(airline);
                 }
-                
+
                 Flight flightTo = new Flight(s_ap, d_ap, ar, getMorningTime());
                 flightNetwork.add(flightTo);
                 s_ap.addRoute(flightTo);
@@ -42,7 +42,7 @@ public class FlightNetworkGenerator {
                 flightTo = new Flight(s_ap, d_ap, ar, getEveningTime());
                 flightNetwork.add(flightTo);
                 s_ap.addRoute(flightTo);
-            }  
+            }
         }
 
         //remove airports without routes
@@ -53,7 +53,7 @@ public class FlightNetworkGenerator {
         }
 
         FlightNetwork fn = new FlightNetwork(airportNetwork, flightNetwork);
-    
+
         if (printStatistics) {
             System.out.println("Network Constructed");
             System.out.println("Number of airports: " + airportNetwork.size());

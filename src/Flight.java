@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -92,16 +91,21 @@ public class Flight { //this is similar to Java's Edge class
         ArrayList<String[]> flightList = new ArrayList<String[]>();
 
         try {
-						Scanner sc = new Scanner(new File("network-data\\routes.data"));
+						//Scanner sc = new Scanner(new File("network-data\\routes.data"));
             //Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\routes.data"));
-            sc.useDelimiter(",");
+            //sc.useDelimiter(",");
+						BufferedReader csvReader = new BufferedReader(new FileReader("network-data\\routes.data"));
 
-            while (sc.hasNext())
+            //while (sc.hasNext())
+						String row;
+						while ((row=csvReader.readLine()) != null)
             {
-                flightList.add(sc.nextLine().split(","));
+                flightList.add(row.split(","));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
 
         return flightList;
