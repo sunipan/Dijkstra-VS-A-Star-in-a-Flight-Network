@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Airport {
+	// needed for fib heap pq
+	FibonacciHeap.Entry<Airport> entry;
 
 	private String name;
 	private String city;
@@ -110,7 +112,7 @@ public class Airport {
 			//Scanner sc = new Scanner(new File("network-data\\airports.data"));
 			//Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airports.data"));
 			//sc.useDelimiter(",");
-			BufferedReader csvReader = new BufferedReader(new FileReader("network-data\\airports.data"));
+			BufferedReader csvReader = new BufferedReader(new FileReader(new File("src/network-data/airports.data").getAbsolutePath()));
 			String row;
 			//while (sc.hasNext())
 			while ((row = csvReader.readLine()) != null)
