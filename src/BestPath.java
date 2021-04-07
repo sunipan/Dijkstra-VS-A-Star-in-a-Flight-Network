@@ -17,6 +17,10 @@ public class BestPath {
     int tempCost;
     while(pq.peek() != null) {
       min = pq.poll();
+      if (min.getIATACode() == target.getIATACode()) {
+        found = true;
+        break;
+      }
       flightsFromMin = min.getOutgoingFlights();
       for (Flight flight: flightsFromMin) {
         if (!checked.contains(flight.getDest())) {
@@ -26,10 +30,7 @@ public class BestPath {
             //set previous of flights destination to min.
             flight.getDest().setPrevious(min);
             //System.out.println(flight.getDest().getIATACode());
-            if (flight.getDest() == target) {
-              found = true;
-              break;
-            }
+
             pq.add(flight.getDest());
           }
         }
@@ -39,7 +40,7 @@ public class BestPath {
     if (!found) System.out.println("Destination was not found");
 
   }
-  
+
   public static void bestPath2(ArrayList<Airport> graph, Airport src, Airport target) {
 	FibonacciHeapPQ pq = new FibonacciHeapPQ();
     //PriorityQueue<Airport> pq = new PriorityQueue<Airport>(11, comparator);
@@ -52,6 +53,10 @@ public class BestPath {
     int tempCost;
     while(pq.peek() != null) {
       min = pq.poll();
+      if (min.getIATACode() == target.getIATACode()) {
+        found = true;
+        break;
+      }
       flightsFromMin = min.getOutgoingFlights();
       for (Flight flight: flightsFromMin) {
         if (!checked.contains(flight.getDest())) {
@@ -61,10 +66,10 @@ public class BestPath {
             //set previous of flights destination to min.
             flight.getDest().setPrevious(min);
             //System.out.println(flight.getDest().getIATACode());
-            if (flight.getDest() == target) {
+            /*if (flight.getDest() == target) {
               found = true;
               break;
-            }
+            }*/
             pq.add(flight.getDest());
           }
         }
@@ -117,10 +122,10 @@ public class BestPath {
       current1 = current1.getPrevious();
     }
     System.out.println(source.getIATACode()+" - start");
-    
-    
+
+
     System.out.println("========================================");
-    
+
     //USE FIBONACCI HEAP
     long time2 = 0;
     if (source != null && destination != null) {
