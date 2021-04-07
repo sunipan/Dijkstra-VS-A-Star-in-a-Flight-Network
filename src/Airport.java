@@ -112,7 +112,7 @@ public class Airport {
 			//Scanner sc = new Scanner(new File("network-data\\airports.data"));
 			//Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airports.data"));
 			//sc.useDelimiter(",");
-			BufferedReader csvReader = new BufferedReader(new FileReader(new File("src/network-data/airports.data").getAbsolutePath()));
+			BufferedReader csvReader = new BufferedReader(new FileReader(new File("network-data/airports.data").getAbsolutePath()));
 			String row;
 			//while (sc.hasNext())
 			while ((row = csvReader.readLine()) != null)
@@ -125,7 +125,6 @@ public class Airport {
 			ioe.printStackTrace();
 		}
 
-		System.out.println("Airport list size: " + airportList.size());
 		return airportList;
 	}
 
