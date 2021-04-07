@@ -69,6 +69,134 @@ public class FlightNetworkGenerator {
         return fn;
     }
 
+    public static FlightNetwork createNorthAmericaGraph(boolean printStatistics){
+        ArrayList<String[]> airportList = Airport.getAirports();
+        ArrayList<String[]> flightList = Flight.getFlights();
+        ArrayList<Airline> airlineList = Airline.getAirlines();
+
+        ArrayList<Airport> airportNetwork = new ArrayList<Airport>();
+        ArrayList<Flight> flightNetwork = new ArrayList<Flight>();
+
+        for (String[] ap : airportList){
+            if ((ap[3].equals("Canada") || ap[3].equals("United States"))&& !ap[4].equals("\\N")){
+                Airport newAP = new Airport(ap[1], ap[2], ap[3], ap[4], Double.parseDouble(ap[6]), -Double.parseDouble(ap[7]));
+                airportNetwork.add(newAP);
+            }
+        }
+
+        for (String[] fl : flightList){
+            String sourceAirportCode = fl[2];
+            String destinationAirportCode = fl[4];
+            String airline = fl[0];
+
+            if (airportExists(airportNetwork, sourceAirportCode) && airportExists(airportNetwork, destinationAirportCode)){
+                Airport s_ap = findAirport(airportNetwork, sourceAirportCode);
+                Airport d_ap = findAirport(airportNetwork, destinationAirportCode);
+                Airline ar = findAirline(airlineList, airline);
+
+                if (ar != null){
+                    Flight flightTo = new Flight(s_ap, d_ap, ar, getMorningTime());
+                    flightNetwork.add(flightTo);
+                    s_ap.addRoute(flightTo);
+
+                    flightTo = new Flight(s_ap, d_ap, ar, getEveningTime());
+                    flightNetwork.add(flightTo);
+                    s_ap.addRoute(flightTo);
+                }
+            }
+        }
+
+        //remove airports without routes
+        for (int i = 0; i < airportNetwork.size(); i++){
+            if (airportNetwork.get(i).getOutgoingFlights().size() == 0){
+                airportNetwork.remove(i);
+            }
+        }
+
+        FlightNetwork fn = new FlightNetwork(airportNetwork, flightNetwork);
+
+        if (printStatistics) {
+            System.out.println("Network Constructed");
+            System.out.println("Number of airports: " + airportNetwork.size());
+            System.out.println("Number of routes: " + flightNetwork.size());
+            System.out.println("================================================");
+            System.out.println("Sample Airport: ");
+
+            airportNetwork.get(32).display();
+            airportNetwork.get(18).display();
+
+        }
+
+        return fn;
+    }
+
+    public static FlightNetwork createWorldGraph(boolean printStatistics){
+        ArrayList<String[]> airportList = Airport.getAirports();
+        ArrayList<String[]> flightList = Flight.getFlights();
+        ArrayList<Airline> airlineList = Airline.getAirlines();
+
+        ArrayList<Airport> airportNetwork = new ArrayList<Airport>();
+        ArrayList<Flight> flightNetwork = new ArrayList<Flight>();
+
+        for (String[] ap : airportList){
+            if (!ap[4].equals("\\N")){
+                try{
+                    Airport newAP = new Airport(ap[1], ap[2], ap[3], ap[4], Double.parseDouble(ap[6]), -Double.parseDouble(ap[7]));
+                    airportNetwork.add(newAP);
+                }
+                catch(Exception e){
+                    // Ignore airports with missing data
+                    // System.out.println(e.getMessage());
+                }
+            }
+        }
+
+        for (String[] fl : flightList){
+            String sourceAirportCode = fl[2];
+            String destinationAirportCode = fl[4];
+            String airline = fl[0];
+
+            if (airportExists(airportNetwork, sourceAirportCode) && airportExists(airportNetwork, destinationAirportCode)){
+                Airport s_ap = findAirport(airportNetwork, sourceAirportCode);
+                Airport d_ap = findAirport(airportNetwork, destinationAirportCode);
+                Airline ar = findAirline(airlineList, airline);
+
+                if (ar != null){
+                    Flight flightTo = new Flight(s_ap, d_ap, ar, getMorningTime());
+                    flightNetwork.add(flightTo);
+                    s_ap.addRoute(flightTo);
+
+                    flightTo = new Flight(s_ap, d_ap, ar, getEveningTime());
+                    flightNetwork.add(flightTo);
+                    s_ap.addRoute(flightTo);
+                }
+            }
+        }
+
+        //remove airports without routes
+        for (int i = 0; i < airportNetwork.size(); i++){
+            if (airportNetwork.get(i).getOutgoingFlights().size() == 0){
+                airportNetwork.remove(i);
+            }
+        }
+
+        FlightNetwork fn = new FlightNetwork(airportNetwork, flightNetwork);
+
+        if (printStatistics) {
+            System.out.println("Network Constructed");
+            System.out.println("Number of airports: " + airportNetwork.size());
+            System.out.println("Number of routes: " + flightNetwork.size());
+            System.out.println("================================================");
+            System.out.println("Sample Airport: ");
+
+            airportNetwork.get(32).display();
+            airportNetwork.get(18).display();
+
+        }
+
+        return fn;
+    }
+
     private static int getMorningTime(){
         return (int)(420 + (Math.random() * 360));
     }

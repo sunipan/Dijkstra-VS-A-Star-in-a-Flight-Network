@@ -94,7 +94,7 @@ public class Flight { //this is similar to Java's Edge class
 						//Scanner sc = new Scanner(new File("network-data\\routes.data"));
             //Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\routes.data"));
             //sc.useDelimiter(",");
-						BufferedReader csvReader = new BufferedReader(new FileReader("network-data\\routes.data"));
+						BufferedReader csvReader = new BufferedReader(new FileReader("network-data/routes.data"));
 
             //while (sc.hasNext())
 						String row;

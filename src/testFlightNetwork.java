@@ -4,7 +4,7 @@ public class testFlightNetwork {
 
 
 		FlightNetworkGenerator networkGen = new FlightNetworkGenerator();
-    FlightNetwork canNetwork = networkGen.createCanadaGraph(true);
+    FlightNetwork canNetwork = networkGen.createWorldGraph(true);
 
     //FlightNetwork.printNetworkAirports(start);
 

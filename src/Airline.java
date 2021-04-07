@@ -37,7 +37,7 @@ public class Airline {
     			  //Scanner sc = new Scanner(new File("network-data\\airline.data"));
             //Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airline.data"));
             //sc.useDelimiter(",");
-            BufferedReader csvReader = new BufferedReader(new FileReader("network-data\\airline.data"));
+            BufferedReader csvReader = new BufferedReader(new FileReader("network-data/airline.data"));
             //sc.hasNext();
             String row;
             while ((row=csvReader.readLine()) != null)
