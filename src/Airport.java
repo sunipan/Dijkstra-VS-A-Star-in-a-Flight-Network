@@ -16,8 +16,10 @@ public class Airport {
 	private String IATACode;
 
 	private int tripCost = 1000000000;  // this is how much it cost to reach this node from source node
+	private int guessCost = 1000000000; //heuristic cost
 	private ArrayList<Flight> departures;
 	private Airport previous = null;
+	private Flight path;
 
 
 	// Empty constructor for testing
@@ -86,6 +88,22 @@ public class Airport {
 
 	public void setTripCost(int tripCost) {
 		this.tripCost = tripCost;
+	}
+
+	public Flight getPath() {
+		return path;
+	}
+
+	public void setPath(Flight path) {
+		this.path = path;
+	}
+
+	public int getGuessCost() {
+		return guessCost;
+	}
+
+	public void setGuessCost(int guessCost) {
+		this.guessCost = guessCost;
 	}
 
 	public void display(){

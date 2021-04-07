@@ -1,15 +1,20 @@
 
 public class FibonacciHeapPQ {
-	
+
 	// create Fibonacci heap to store our airport nodes in
 	FibonacciHeap<Airport> heap = new FibonacciHeap<>();
-	
+
 	// add new airport node
 	public void add(Airport item) {
 		FibonacciHeap.Entry<Airport> entry = heap.enqueue(item, item.getTripCost());
 		item.entry = entry;
 	}
-	
+
+	public void addAStar(Airport item) {
+		FibonacciHeap.Entry<Airport> entry = heap.enqueue(item, item.getGuessCost());
+		item.entry = entry;
+	}
+
 	// used to change priority from infinity to real cost
 	public void decreasePriority(Airport item, int priority) {
 		item.setTripCost(priority);
@@ -20,11 +25,11 @@ public class FibonacciHeapPQ {
 	public Airport poll() {
 		return heap.dequeueMin().getValue();
 	}
-	
+
 	public int size() {
 		return heap.size();
 	}
-	
+
 	public Airport peek() {
 		return heap.peek();
 	}

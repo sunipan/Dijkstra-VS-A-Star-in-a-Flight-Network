@@ -29,6 +29,7 @@ public class BestPath {
             flight.getDest().setTripCost(tempCost);
             //set previous of flights destination to min.
             flight.getDest().setPrevious(min);
+            flight.getDest().setPath(flight);
             //System.out.println(flight.getDest().getIATACode());
 
             pq.add(flight.getDest());
@@ -65,11 +66,9 @@ public class BestPath {
             flight.getDest().setTripCost(tempCost);
             //set previous of flights destination to min.
             flight.getDest().setPrevious(min);
+            flight.getDest().setPath(flight);
             //System.out.println(flight.getDest().getIATACode());
-            /*if (flight.getDest() == target) {
-              found = true;
-              break;
-            }*/
+
             pq.add(flight.getDest());
           }
         }

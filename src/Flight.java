@@ -17,6 +17,14 @@ public class Flight { //this is similar to Java's Edge class
 		this.cost = cost;
 	}
 
+	//temp for heuristic function -- uses cost/km and travelDistance
+	public Flight(Airport source, Airport dest) {
+		this.source = source;
+		this.dest = dest;
+
+		calculateTravelTime();
+	}
+
 	// Used for testing
 	public Flight(Airport source, Airport dest, Airline airline) {
 		this.source = source;
@@ -81,6 +89,10 @@ public class Flight { //this is similar to Java's Edge class
 		this.travelTime = travelTime;
 	}
 
+	public int getTravelDistance() {
+		return this.travelDistance;
+	}
+
 	public void display(){
 		System.out.println("Airline: " + this.airline.getName() + " | Destination: " + this.dest.getCity());
 		//System.out.println("Distance: " + this.travelDistance + " | Time: " + this.travelTime + " | Cost: $" + this.cost);
@@ -111,7 +123,7 @@ public class Flight { //this is similar to Java's Edge class
         return flightList;
     }
 
-	private void calculateTravelTime(){
+	public void calculateTravelTime(){
 		double lat1 = Math.toRadians(this.source.getLatitude());
 		double lon1 = Math.toRadians(this.source.getLongitude());
 
