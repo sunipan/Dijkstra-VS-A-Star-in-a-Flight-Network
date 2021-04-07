@@ -15,7 +15,7 @@ public class Airport {
 
 	private String IATACode;
 
-	private int tripCost;  // this is how much it cost to reach this node from source node
+	private int tripCost = 1000000000;  // this is how much it cost to reach this node from source node
 	private ArrayList<Flight> departures;
 	private Airport previous = null;
 
@@ -117,13 +117,12 @@ public class Airport {
 			//while (sc.hasNext())
 			while ((row = csvReader.readLine()) != null)
 			{
-				//System.out.println(row);
 				airportList.add(row.split(","));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException ioe) {
-				ioe.printStackTrace();
+			ioe.printStackTrace();
 		}
 
 		System.out.println("Airport list size: " + airportList.size());
