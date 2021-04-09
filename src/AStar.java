@@ -59,23 +59,24 @@ public class AStar {
   }
 
   public static void main(String args[]) {
-    if (args.length != 0) {
-      if (args[0].equals("test")){
-
-      }
-    } else {
-      FlightNetworkGenerator fng = new FlightNetworkGenerator();
+    FlightNetworkGenerator fng = new FlightNetworkGenerator();
+    System.out.println("Input 0 for graph of world, 1 for graph of Canada (any input other than 0 will use the graph of Canada)");
+    System.out.print("Input here: ");
+    int bool;
+    Scanner sc = new Scanner(System.in);
+    bool = sc.nextInt();
+    if (bool == 0) {
       flightNetwork = fng.createWorldGraph(false);
-
+    } else {
+      flightNetwork = fng.createCanadaGraph(false);
     }
 
-
-    Scanner sc = new Scanner(System.in);
+    sc.nextLine();
     System.out.print("Enter the IATACode of the source airport: ");
     String srcCode = sc.nextLine();
     System.out.print("Enter the IATACode of the destination airport: ");
     String destCode = sc.nextLine();
-
+    sc.close();
     Airport source = flightNetwork.findAirport(srcCode);
     Airport destination = flightNetwork.findAirport(destCode);
 
