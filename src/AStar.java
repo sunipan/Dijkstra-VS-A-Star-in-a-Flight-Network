@@ -11,10 +11,12 @@ public class AStar {
   }
 
   public static void aStar(ArrayList<Airport> graph, Airport src, Airport target) {
-
+    //Initialize a priority queue as the visited unchecked nodes list
     FibonacciHeapPQ pq = new FibonacciHeapPQ();
+    //initialize a hashset as the checked nodes list
     Set<Airport> checked = new HashSet<Airport>();
     tempFlight = new Flight(src, target);
+    //Initialize source node to 0 cost and add to priority queue
     src.setTripCost(0);
     src.setGuessCost(heuristic(tempFlight));
     pq.addAStar(src);
@@ -23,15 +25,17 @@ public class AStar {
     ArrayList<Flight> flightsFromMin;
     boolean found = false;
     int tempCost;
+    //while the visited nodes list is not empty
     while(pq.peek() != null) {
+      //poll the lowest cost node
       min = pq.poll();
-      if (min.getIATACode() == target.getIATACode()) {
+      if (min.getIATACode() == target.getIATACode()) { //if min is destination airport
         found = true;
         break;
       }
-      flightsFromMin = min.getOutgoingFlights();
-      for (Flight flight: flightsFromMin) {
-        if (!checked.contains(flight.getDest())) {
+      flightsFromMin = min.getOutgoingFlights(); //flights from min = all neighbours of min
+      for (Flight flight: flightsFromMin) { //check all neighbours of min
+        if (!checked.contains(flight.getDest())) { //if the neighbour has not already been checked
 
           tempCost = min.getTripCost() + flight.getCost();
           if (tempCost < flight.getDest().getTripCost()) {
@@ -61,7 +65,7 @@ public class AStar {
       }
     } else {
       FlightNetworkGenerator fng = new FlightNetworkGenerator();
-      flightNetwork = fng.createCanadaGraph(false);
+      flightNetwork = fng.createWorldGraph(false);
 
     }
 

@@ -7,32 +7,35 @@ public class BestPath {
 
   public static void bestPath1(ArrayList<Airport> graph, Airport src, Airport target) {
 	//FibonacciHeapPQ pq = new FibonacciHeapPQ();
+  //Initialize a priority queue as the visited unchecked nodes list
     PriorityQueue<Airport> pq = new PriorityQueue<Airport>(11, comparator);
+    //initialize a hashset as the checked nodes list
     Set<Airport> checked = new HashSet<Airport>();
+    // Initialize source node to 0 cost and add to priority queue
     src.setTripCost(0);
     pq.add(src);
     Airport min;
     ArrayList<Flight> flightsFromMin;
     boolean found = false;
     int tempCost;
+    //while the visited nodes list is not empty
     while(pq.peek() != null) {
+      //poll the lowest cost node
       min = pq.poll();
-      if (min.getIATACode() == target.getIATACode()) {
+      if (min.getIATACode() == target.getIATACode()) { //if min is destination airport
         found = true;
         break;
       }
-      flightsFromMin = min.getOutgoingFlights();
-      for (Flight flight: flightsFromMin) {
-        if (!checked.contains(flight.getDest())) {
+      flightsFromMin = min.getOutgoingFlights(); //flights from min = all neighbours of min
+      for (Flight flight: flightsFromMin) { //check all neighbours of min
+        if (!checked.contains(flight.getDest())) { //if the neighbour has not already been checked
           tempCost = min.getTripCost() + flight.getCost();
-          if (tempCost < flight.getDest().getTripCost()) {
+          if (tempCost < flight.getDest().getTripCost()) { //if this path is cheaper than any previous path to neighbour
             flight.getDest().setTripCost(tempCost);
             //set previous of flights destination to min.
             flight.getDest().setPrevious(min);
             flight.getDest().setPath(flight);
-            //System.out.println(flight.getDest().getIATACode());
-
-            pq.add(flight.getDest());
+            pq.add(flight.getDest()); //add destination to the visited list
           }
         }
       }
@@ -42,8 +45,11 @@ public class BestPath {
 
   }
 
+
+  //bestPath2 is the same algorithm as bestPath1, however it uses a fibonacci heap rather than a min-heap
+  //in the priority queue.
   public static void bestPath2(ArrayList<Airport> graph, Airport src, Airport target) {
-	FibonacciHeapPQ pq = new FibonacciHeapPQ();
+	  FibonacciHeapPQ pq = new FibonacciHeapPQ();
     //PriorityQueue<Airport> pq = new PriorityQueue<Airport>(11, comparator);
     Set<Airport> checked = new HashSet<Airport>();
     src.setTripCost(0);
