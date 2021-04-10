@@ -143,4 +143,16 @@ public class Flight { //this is similar to Java's Edge class
 		return 6371.009 * arcLength;
 	}
 
+	public static int distanceToDestination(Airport source, Airport destination){
+		double lat1 = source.getLatitude();
+		double lat2 = destination.getLatitude();
+		double lon1 = source.getLongitude();
+		double lon2 = destination.getLongitude();
+
+		double earthRadius = 6371.009;
+		double arcLength = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
+
+		return (int)(earthRadius * arcLength);
+	}
+
 }
