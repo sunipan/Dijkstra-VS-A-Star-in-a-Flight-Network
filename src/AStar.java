@@ -55,13 +55,13 @@ public class AStar {
   }
 
   public static void aStar_MH(ArrayList<Airport> graph, Airport src, Airport target) {
-
-    FibonacciHeapPQ pq = new FibonacciHeapPQ();
+    PriorityQueue<Airport> pq = new PriorityQueue<Airport>(11, comparator);
+    //FibonacciHeapPQ pq = new FibonacciHeapPQ();
     Set<Airport> checked = new HashSet<Airport>();
     tempFlight = new Flight(src, target);
     src.setTripCost(0);
     src.setGuessCost(Flight.distanceToDestination(src, target));
-    pq.addAStar(src);
+    pq.add(src);
 
     Airport min;
     ArrayList<Flight> flightsFromMin;
@@ -80,7 +80,7 @@ public class AStar {
           tempCost = min.getTripCost() + flight.getCost();
           if (tempCost < flight.getDest().getTripCost()) {
             tempFlight.setSource(flight.getDest());
-            //tempFlight == current destination to trip destination
+            //tempFlight == flight from current destination to trip destination
             //add heuristic cost to tempCost to set guess cost (heuristic cost)
             flight.getDest().setTripCost(tempCost);
             flight.getDest().setGuessCost(tempCost + Flight.distanceToDestination(flight.getDest(), target));
@@ -88,7 +88,7 @@ public class AStar {
             flight.getDest().setPrevious(min);
             flight.getDest().setPath(flight);
 
-            pq.addAStar(flight.getDest());
+            pq.add(flight.getDest());
           }
         }
       }
@@ -121,14 +121,14 @@ public class AStar {
         default:
         flightNetwork = fng.createWorldGraph(true);
         break;
-  
+
       }
       String srcCode = sourceCode;
       String destCode = destinationCode;
-  
+
       Airport source = flightNetwork.findAirport(srcCode);
       Airport destination = flightNetwork.findAirport(destCode);
-  
+
       //made bestPath not return anything, if Airport has a previous
       //it can be used like a backwards linked list from destination
       long time = 0;
@@ -145,7 +145,7 @@ public class AStar {
       System.out.println("Finding this path took: "+time+" ms.");
       System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
       System.out.println("This will cost: "+destination.getTripCost());
-      
+
   }
 
   public static void runAS_FIB(String graph, String sourceCode, String destinationCode){
@@ -196,7 +196,7 @@ public class AStar {
     System.out.println("Finding this path took: "+time+" ms.");
     System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
     System.out.println("This will cost: "+destination.getTripCost());
-    
+
 }
 
 public static void resetFlightNetwork(){
