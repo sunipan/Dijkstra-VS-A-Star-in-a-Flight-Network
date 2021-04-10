@@ -10,7 +10,7 @@ public class AStar {
     return (int)(temp.getTravelDistance() * 23.72);
   }
 
-  public static void aStar(ArrayList<Airport> graph, Airport src, Airport target) {
+  public static void aStar_FIB(ArrayList<Airport> graph, Airport src, Airport target) {
 	//Initialize a priority queue as the visited unchecked nodes list
     FibonacciHeapPQ pq = new FibonacciHeapPQ();
     //initialize a hashset as the checked nodes list
@@ -57,7 +57,160 @@ public class AStar {
     if (!found) System.out.println("Destination was not found");
 
   }
+  
+  // A* with min heap
+  public static void aStar_MH(ArrayList<Airport> graph, Airport src, Airport target) {
+	  	
+	    PriorityQueue<Airport> pq = new PriorityQueue<Airport>(comparator);
+	    Set<Airport> checked = new HashSet<Airport>();
+	    tempFlight = new Flight(src, target);
+	    src.setTripCost(0);
+	    src.setGuessCost(Flight.distanceToDestination(src, target));
+	    pq.add(src);
 
+	    Airport min;
+	    ArrayList<Flight> flightsFromMin;
+	    boolean found = false;
+	    int tempCost;
+	    while(pq.peek() != null) {
+	      min = pq.poll();
+	      if (min.getIATACode() == target.getIATACode()) {
+	        found = true;
+	        break;
+	      }
+	      flightsFromMin = min.getOutgoingFlights();
+	      for (Flight flight: flightsFromMin) {
+	        if (!checked.contains(flight.getDest())) {
+
+	          tempCost = min.getTripCost() + flight.getCost();
+	          if (tempCost < flight.getDest().getTripCost()) {
+	            tempFlight.setSource(flight.getDest());
+	            //tempFlight == current destination to trip destination
+	            //add heuristic cost to tempCost to set guess cost (heuristic cost)
+	            flight.getDest().setTripCost(tempCost);
+	            flight.getDest().setGuessCost(tempCost + Flight.distanceToDestination(flight.getDest(), target));
+	            //set previous of flights destination to min.
+	            flight.getDest().setPrevious(min);
+	            flight.getDest().setPath(flight);
+
+	            pq.add(flight.getDest());
+	          }
+	        }
+	      }
+	      checked.add(min);
+	    }
+	    if (!found) System.out.println("Destination was not found");
+
+	  }
+  
+  public static void runAS_MH(String graph, String sourceCode, String destinationCode){
+      FlightNetworkGenerator fng = new FlightNetworkGenerator();
+
+      switch (graph){
+        case "Canada":
+        flightNetwork = fng.createCanadaGraph(true);
+        break;
+        case "USA":
+        flightNetwork = fng.createUSGraph(true);
+        break;
+        case "Europe":
+        flightNetwork = fng.createEuropeGraph(true);
+        break;
+        case "NA":
+        flightNetwork = fng.createNorthAmericaGraph(true);
+        break;
+        case "World":
+        flightNetwork = fng.createWorldGraph(true);
+        break;
+        default:
+        flightNetwork = fng.createWorldGraph(true);
+        break;
+  
+      }
+      
+      String srcCode = sourceCode;
+      String destCode = destinationCode;
+  
+      Airport source = flightNetwork.findAirport(srcCode);
+      Airport destination = flightNetwork.findAirport(destCode);
+  
+      //made bestPath not return anything, if Airport has a previous
+      //it can be used like a backwards linked list from destination
+      long time = 0;
+      if (source != null && destination != null) {
+        time = System.currentTimeMillis();
+        aStar_MH(flightNetwork.getAirportNetwork(), source, destination);
+        time = System.currentTimeMillis() - time;
+      } else if (source == null) {
+        System.out.println("source was null");
+      } else if (destination == null) {
+        System.out.println("destination was null");
+      }
+
+      System.out.println("Finding this path took: "+time+" ms.");
+      System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
+      System.out.println("This will cost: "+destination.getTripCost());
+      
+  }
+
+  public static void runAS_FIB(String graph, String sourceCode, String destinationCode){
+	    FlightNetworkGenerator fng = new FlightNetworkGenerator();
+
+	    switch (graph){
+	      case "Canada":
+	      flightNetwork = fng.createCanadaGraph(true);
+	      break;
+	      case "USA":
+	      flightNetwork = fng.createUSGraph(true);
+	      break;
+	      case "Europe":
+	      flightNetwork = fng.createEuropeGraph(true);
+	      break;
+	      case "NA":
+	      flightNetwork = fng.createNorthAmericaGraph(true);
+	      break;
+	      case "World":
+	      flightNetwork = fng.createWorldGraph(true);
+	      break;
+	      default:
+	      flightNetwork = fng.createWorldGraph(true);
+	      break;
+
+	    }
+	    
+
+	    String srcCode = sourceCode;
+	    String destCode = destinationCode;
+
+	    Airport source = flightNetwork.findAirport(srcCode);
+	    Airport destination = flightNetwork.findAirport(destCode);
+
+	    //made bestPath not return anything, if Airport has a previous
+	    //it can be used like a backwards linked list from destination
+	    long time = 0;
+	    if (source != null && destination != null) {
+	      time = System.currentTimeMillis();
+	      aStar_FIB(flightNetwork.getAirportNetwork(), source, destination);
+	      time = System.currentTimeMillis() - time;
+	    } else if (source == null) {
+	      System.out.println("source was null");
+	    } else if (destination == null) {
+	      System.out.println("destination was null");
+	    }
+	    
+	    System.out.println("Finding this path took: "+time+" ms.");
+	    System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
+	    System.out.println("This will cost: "+destination.getTripCost());
+	    
+	}
+  
+  public static void resetFlightNetwork(){
+	  System.out.println("Resetting Flight Network");
+	  for(Airport a: flightNetwork.getAirportNetwork()) {
+	    a.setTripCost(Integer.MAX_VALUE);
+	  }
+	}
+  
   public static void main(String args[]) {
 	//create flightNetwork
     FlightNetworkGenerator fng = new FlightNetworkGenerator();
@@ -76,11 +229,11 @@ public class AStar {
 
     //made bestPath not return anything, if Airport has a previous
     //it can be used like a backwards linked list from destination
-    System.out.println("A* using a Fibonacci heap");
+    System.out.println("A* using a Fibonacci heap:");
     long time = 0;
     if (source != null && destination != null) {
       time = System.currentTimeMillis();
-      aStar(flightNetwork.getAirportNetwork(), source, destination);
+      aStar_FIB(flightNetwork.getAirportNetwork(), source, destination);
       time = System.currentTimeMillis() - time;
     } else if (source == null) {
       System.out.println("source was null");
@@ -109,7 +262,7 @@ public class AStar {
     long time1 = 0;
     if (source != null && destination != null) {
       time1 = System.currentTimeMillis();
-      BestPath.bestPath(flightNetwork.getAirportNetwork(), source, destination);
+      BestPath.bestPath1(flightNetwork.getAirportNetwork(), source, destination);
       time1 = System.currentTimeMillis() - time1;
     } else if (destination == null) {
       System.out.println("destination was null");

@@ -123,16 +123,10 @@ public class Airport {
 	}
 
 	public static ArrayList<String[]> getAirports(){
-
 		ArrayList<String[]> airportList = new ArrayList<String[]>();
-
 		try {
-			//Scanner sc = new Scanner(new File("network-data\\airports.data"));
-			//Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airports.data"));
-			//sc.useDelimiter(",");
 			BufferedReader csvReader = new BufferedReader(new FileReader("src/network-data/airports.data"));
 			String row;
-			//while (sc.hasNext())
 			while ((row = csvReader.readLine()) != null)
 			{
 				airportList.add(row.split(","));

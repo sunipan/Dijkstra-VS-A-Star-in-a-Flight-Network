@@ -4,11 +4,11 @@ public class testFlightNetwork {
 
 
 		FlightNetworkGenerator networkGen = new FlightNetworkGenerator();
-    FlightNetwork canNetwork = networkGen.createIcelandGraph(true);
+    FlightNetwork canNetwork = networkGen.createWorldGraph(true);
 
     //FlightNetwork.printNetworkAirports(start);
 
-    Airport ar = canNetwork.findAirport("YEG");
+    Airport ar = canNetwork.findAirport("PER");
 
     ar.getOutgoingFlights().get(0).getDest().getOutgoingFlights().get(0).display();
 

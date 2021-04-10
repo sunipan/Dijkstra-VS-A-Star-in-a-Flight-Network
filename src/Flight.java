@@ -95,7 +95,7 @@ public class Flight { //this is similar to Java's Edge class
 
 	public void display(){
 		System.out.println("Airline: " + this.airline.getName() + " | Destination: " + this.dest.getCity());
-		//System.out.println("Distance: " + this.travelDistance + " | Time: " + this.travelTime + " | Cost: $" + this.cost);
+
 		System.out.println("Departure time: " + this.depTime);
 	}
 
@@ -103,12 +103,7 @@ public class Flight { //this is similar to Java's Edge class
         ArrayList<String[]> flightList = new ArrayList<String[]>();
 
         try {
-						//Scanner sc = new Scanner(new File("network-data\\routes.data"));
-            //Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\routes.data"));
-            //sc.useDelimiter(",");
 						BufferedReader csvReader = new BufferedReader(new FileReader("src/network-data/routes.data"));
-
-            //while (sc.hasNext())
 						String row;
 						while ((row=csvReader.readLine()) != null)
             {
