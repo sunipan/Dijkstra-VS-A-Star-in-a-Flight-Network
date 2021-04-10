@@ -24,9 +24,8 @@ java AStar
 
 You'll then be able to select the size of graph you wish to run, and then select the start and end airports using IATA codes (YEG, YVR, YLW)
 
-Alternativly, you can run the Benchmark.java file by uncommenting the spessific test case you wish to run, and then running the file using
+Alternatively, you can run the Benchmark.java file by uncommenting the specific test case you wish to run, and then running the file using
 
 ```
 java Benchmark
 ```
-
