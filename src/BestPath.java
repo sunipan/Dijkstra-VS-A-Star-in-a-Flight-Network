@@ -38,7 +38,7 @@ public class BestPath {
       }
       checked.add(min);
     }
-    if (!found) 
+    if (!found)
     	System.out.println("Destination was not found");
 
   }
@@ -78,7 +78,7 @@ public class BestPath {
       }
       checked.add(min);
     }
-    if (!found) 
+    if (!found)
     	System.out.println("Destination was not found");
 
   }
@@ -131,6 +131,10 @@ public class BestPath {
     System.out.println("Finding this path took: "+time1+" ms.");
     System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
     System.out.println("This will cost: "+destination.getTripCost());
+    while (!current1.getName().equals(source.getName())) {
+      System.out.println(current1.getIATACode());
+      current1 = current1.getPrevious();
+    }
   }
 
   public static void runDK_FIB(String graph, String sourceCode, String destinationCode){
@@ -181,6 +185,10 @@ public class BestPath {
     System.out.println("Finding this path took: "+time1+" ms.");
     System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
     System.out.println("This will cost: "+destination.getTripCost());
+    while (!current1.getName().equals(source.getName())) {
+      System.out.println(current1.getIATACode());
+      current1 = current1.getPrevious();
+    }
   }
 
   public static void resetFlightNetwork(){
@@ -199,7 +207,7 @@ public class BestPath {
 
     FlightNetworkGenerator fng = new FlightNetworkGenerator();
       flightNetwork = fng.createWorldGraph(true);
- 
+
 
 
     String srcCode = "YZP";
@@ -227,13 +235,13 @@ public class BestPath {
       current1 = current1.getPrevious();
     }
     System.out.println(source.getIATACode()+" - start");
-    
+
     System.out.println("Resetting Flight Network");
     for(Airport a: flightNetwork.getAirportNetwork()) {
     	a.setTripCost(Integer.MAX_VALUE);
     }
     System.out.println("========================================");
-    
+
     Airport source2 = flightNetwork.findAirport(srcCode);
     Airport destination2 = flightNetwork.findAirport(destCode);
     //USE FIBONACCI HEAP
@@ -257,7 +265,7 @@ public class BestPath {
     }
     System.out.println(source2.getIATACode()+" - start");
 
-    
+
   }
 
 }

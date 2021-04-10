@@ -145,7 +145,10 @@ public class AStar {
       System.out.println("Finding this path took: "+time+" ms.");
       System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
       System.out.println("This will cost: "+destination.getTripCost());
-
+      while (!current.getName().equals(source.getName())) {
+        System.out.println(current.getIATACode());
+        current = current.getPrevious();
+      }
   }
 
   public static void runAS_FIB(String graph, String sourceCode, String destinationCode){
@@ -196,7 +199,10 @@ public class AStar {
     System.out.println("Finding this path took: "+time+" ms.");
     System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
     System.out.println("This will cost: "+destination.getTripCost());
-
+    while (!current.getName().equals(source.getName())) {
+      System.out.println(current.getIATACode());
+      current = current.getPrevious();
+    }
 }
 
 public static void resetFlightNetwork(){
