@@ -262,14 +262,14 @@ public class AStar {
         a.setPrevious(null);
       }*/
     } else {
-      System.out.println("===============================================\nDijkstra's using a min-heap:");
+      System.out.println("===============================================\nAStar using a min-heap:");
 
       //made bestPath not return anything, if Airport has a previous
       //it can be used like a backwards linked list from destination
       long time1 = 0;
       if (source != null && destination != null) {
         time1 = System.currentTimeMillis();
-        BestPath.bestPath1(flightNetwork.getAirportNetwork(), source, destination);
+        aStar_MH(flightNetwork.getAirportNetwork(), source, destination);
         time1 = System.currentTimeMillis() - time1;
       } else if (destination == null) {
         System.out.println("destination was null");
