@@ -103,7 +103,7 @@ public class Flight { //this is similar to Java's Edge class
         ArrayList<String[]> flightList = new ArrayList<String[]>();
 
         try {
-						BufferedReader csvReader = new BufferedReader(new FileReader("src/network-data/routes.data"));
+						BufferedReader csvReader = new BufferedReader(new FileReader("network-data/routes.data"));
 						String row;
 						while ((row=csvReader.readLine()) != null)
             {

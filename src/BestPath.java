@@ -43,7 +43,7 @@ public class BestPath {
     if (!found) System.out.println("Destination was not found");
 
   }
-  
+
   public static void bestPath2(ArrayList<Airport> graph, Airport src, Airport target) {
 	  FibonacciHeapPQ pq = new FibonacciHeapPQ();
     //PriorityQueue<Airport> pq = new PriorityQueue<Airport>(11, comparator);
@@ -73,17 +73,17 @@ public class BestPath {
       }
       checked.add(min);
     }
-    if (!found) 
+    if (!found)
     	System.out.println("Destination was not found");
 
   }
-  
+
   public static void resetFlightNetwork(){
 	    for(Airport a: flightNetwork.getAirportNetwork()) {
 	    	a.setTripCost(Integer.MAX_VALUE);
 	    }
 	  }
-  
+
   public static void runDK_MH(String graph, String sourceCode, String destinationCode){
 	    FlightNetworkGenerator fng = new FlightNetworkGenerator();
 
@@ -132,9 +132,9 @@ public class BestPath {
 	    System.out.println("Finding this path took: "+time1+" ms.");
 	    System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
 	    System.out.println("This will cost: "+destination.getTripCost());
-	  
+
   }
-  
+
   public static void runDK_FIB(String graph, String sourceCode, String destinationCode){
 	    FlightNetworkGenerator fng = new FlightNetworkGenerator();
 
@@ -179,31 +179,39 @@ public class BestPath {
 	    } else if (destination == null) {
 	      System.out.println("destination was null");
 	    }
-	    
+
 	    System.out.println("Finding this path took: "+time1+" ms.");
 	    System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
 	    System.out.println("This will cost: "+destination.getTripCost());
 	}
-  
-  
+
+
 
 
   public static void main(String args[]) {
-	    runDK_MH("World", "YZP", "SVX");
 
-	    System.out.println("========================================\nDijkstra's using min-heap:");
+
 
 	    FlightNetworkGenerator fng = new FlightNetworkGenerator();
-	      flightNetwork = fng.createWorldGraph(true);
-	 
+      flightNetwork = fng.createWorldGraph(true);
 
 
-	    String srcCode = "YZP";
-	    String destCode = "SVX";
+      //take user input
+      Scanner sc = new Scanner(System.in);
+      System.out.print("Enter the IATACode of the source airport: ");
+      String srcCode = sc.nextLine();
+      System.out.print("Enter the IATACode of the destination airport: ");
+      String destCode = sc.nextLine();
+      //get required start and target nodes
+      Airport source = flightNetwork.findAirport(srcCode);
+      Airport destination = flightNetwork.findAirport(destCode);
 
-	    Airport source = flightNetwork.findAirport(srcCode);
-	    Airport destination = flightNetwork.findAirport(destCode);
+      System.out.println("Would you like to use a min-heap or a fibonacci heap?");
+      System.out.print("input 0 for min-heap, 1 for fibonacci: ");
+      int bool = sc.nextInt();
 
+    if (bool == 0) {
+      System.out.println("========================================\nDijkstra's using min-heap:");
 	    long time1 = 0;
 	    if (source != null && destination != null) {
 	      time1 = System.currentTimeMillis();
@@ -223,15 +231,16 @@ public class BestPath {
 	      current1 = current1.getPrevious();
 	    }
 	    System.out.println(source.getIATACode()+" - start");
-	    
+
 	    System.out.println("Resetting Flight Network");
 	    for(Airport a: flightNetwork.getAirportNetwork()) {
 	    	a.setTripCost(Integer.MAX_VALUE);
 	    }
-	    System.out.println("========================================\nDijkstra's using Fibonacci heap:");
-	    
-	    Airport source2 = flightNetwork.findAirport(srcCode);
-	    Airport destination2 = flightNetwork.findAirport(destCode);
+
+    } else {
+      System.out.println("========================================\nDijkstra's using Fibonacci heap:");
+      Airport source2 = flightNetwork.findAirport(srcCode);
+      Airport destination2 = flightNetwork.findAirport(destCode);
 	    //USE FIBONACCI HEAP
 	    long time2 = 0;
 	    if (source2 != null && destination2 != null) {
@@ -253,7 +262,8 @@ public class BestPath {
 	    }
 	    System.out.println(source2.getIATACode()+" - start");
 
-	    
-	  }
+
+	   }
+  }
 
 }

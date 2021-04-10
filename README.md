@@ -21,6 +21,7 @@ If you want to run A*, run
 ```
 java AStar
 ```
+NOTE: There is a possibility of a file Not found exception as the relative file-path used in Airline, Airport, and Flight classes does not port to every IDE.
 
 You'll then be able to select the size of graph you wish to run, and then select the start and end airports using IATA codes (YEG, YVR, YLW)
 

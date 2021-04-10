@@ -125,7 +125,7 @@ public class Airport {
 	public static ArrayList<String[]> getAirports(){
 		ArrayList<String[]> airportList = new ArrayList<String[]>();
 		try {
-			BufferedReader csvReader = new BufferedReader(new FileReader("src/network-data/airports.data"));
+			BufferedReader csvReader = new BufferedReader(new FileReader("network-data/airports.data"));
 			String row;
 			while ((row = csvReader.readLine()) != null)
 			{

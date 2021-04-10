@@ -33,7 +33,7 @@ public class Airline {
     public static ArrayList<Airline> getAirlines(){
         ArrayList<Airline> airlineList = new ArrayList<Airline>();
         try {
-            BufferedReader csvReader = new BufferedReader(new FileReader("src/network-data/airline.data"));
+            BufferedReader csvReader = new BufferedReader(new FileReader("network-data/airline.data"));
             String row;
             while ((row=csvReader.readLine()) != null)
             {
