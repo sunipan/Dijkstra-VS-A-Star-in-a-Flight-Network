@@ -29,24 +29,16 @@ public class Airline {
     public String getCode() {
         return code;
     }
-
+    //reads the airline data from file into an arraylist
     public static ArrayList<Airline> getAirlines(){
         ArrayList<Airline> airlineList = new ArrayList<Airline>();
-
         try {
-    			  //Scanner sc = new Scanner(new File("network-data\\airline.data"));
-            //Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\airline.data"));
-            //sc.useDelimiter(",");
-            BufferedReader csvReader = new BufferedReader(new FileReader("network-data/airline.data"));
-            //sc.hasNext();
+            BufferedReader csvReader = new BufferedReader(new FileReader("src/network-data/airline.data"));
             String row;
             while ((row=csvReader.readLine()) != null)
-            //while (sc.hasNext())
             {
                 String[] airlineData = row.split(",");
-                //String[] airlineData = sc.nextLine().split(",");
                 if (!airlineData[7].equals("N")){
-                    //System.out.println(airlineData[0]);
                     Airline airline = new Airline(airlineData[1], airlineData[2], airlineData[3], airlineData[5], airlineData[6]);
                     airlineList.add(airline);
                 }

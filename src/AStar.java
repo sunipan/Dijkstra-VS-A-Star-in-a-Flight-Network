@@ -11,7 +11,7 @@ public class AStar {
   }
 
   public static void aStar(ArrayList<Airport> graph, Airport src, Airport target) {
-    //Initialize a priority queue as the visited unchecked nodes list
+	//Initialize a priority queue as the visited unchecked nodes list
     FibonacciHeapPQ pq = new FibonacciHeapPQ();
     //initialize a hashset as the checked nodes list
     Set<Airport> checked = new HashSet<Airport>();
@@ -43,7 +43,7 @@ public class AStar {
             //tempFlight == current destination to trip destination
             //add heuristic cost to tempCost to set guess cost (heuristic cost)
             flight.getDest().setTripCost(tempCost);
-            flight.getDest().setGuessCost(tempCost + heuristic(tempFlight));
+            flight.getDest().setGuessCost(tempCost + Flight.distanceToDestination(flight.getDest(), target));
             //set previous of flights destination to min.
             flight.getDest().setPrevious(min);
             flight.getDest().setPath(flight);
@@ -59,29 +59,24 @@ public class AStar {
   }
 
   public static void main(String args[]) {
+	//create flightNetwork
     FlightNetworkGenerator fng = new FlightNetworkGenerator();
-    System.out.println("Input 0 for graph of world, 1 for graph of Canada (any input other than 0 will use the graph of Canada)");
-    System.out.print("Input here: ");
-    int bool;
-    Scanner sc = new Scanner(System.in);
-    bool = sc.nextInt();
-    if (bool == 0) {
-      flightNetwork = fng.createWorldGraph(false);
-    } else {
-      flightNetwork = fng.createCanadaGraph(false);
-    }
+    flightNetwork = fng.createWorldGraph(false);
 
-    sc.nextLine();
+
+    //take user input
+    Scanner sc = new Scanner(System.in);
     System.out.print("Enter the IATACode of the source airport: ");
     String srcCode = sc.nextLine();
     System.out.print("Enter the IATACode of the destination airport: ");
     String destCode = sc.nextLine();
-    sc.close();
+    //get required start and target nodes
     Airport source = flightNetwork.findAirport(srcCode);
     Airport destination = flightNetwork.findAirport(destCode);
 
     //made bestPath not return anything, if Airport has a previous
     //it can be used like a backwards linked list from destination
+    System.out.println("A* using a Fibonacci heap");
     long time = 0;
     if (source != null && destination != null) {
       time = System.currentTimeMillis();
@@ -101,6 +96,36 @@ public class AStar {
       current = current.getPrevious();
     }
     System.out.println(source.getIATACode()+" - start");
+    
+    
+    System.out.println("Resetting Flight Network");
+    for(Airport a: flightNetwork.getAirportNetwork()) {
+    	a.setTripCost(Integer.MAX_VALUE);
+    }
+    System.out.println("===============================================\nDijkstra's using a min-heap:");
+    
+    //made bestPath not return anything, if Airport has a previous
+    //it can be used like a backwards linked list from destination
+    long time1 = 0;
+    if (source != null && destination != null) {
+      time1 = System.currentTimeMillis();
+      BestPath.bestPath(flightNetwork.getAirportNetwork(), source, destination);
+      time1 = System.currentTimeMillis() - time1;
+    } else if (destination == null) {
+      System.out.println("destination was null");
+    } else {
+    	System.out.println("source was null");
+    }
+    Airport current1 = destination;
+    System.out.println("Finding this path took: "+time1+" ms.");
+    System.out.println("Trip outline to get to "+destination.getName()+" from "+source.getName());
+    System.out.println("This will cost: "+destination.getTripCost());
+    while (!current1.getName().equals(source.getName())) {
+      System.out.println(current1.getIATACode());
+      current1 = current1.getPrevious();
+    }
+    System.out.println(source.getIATACode()+" - start");
+
   }
 
 }

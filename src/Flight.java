@@ -106,7 +106,7 @@ public class Flight { //this is similar to Java's Edge class
 						//Scanner sc = new Scanner(new File("network-data\\routes.data"));
             //Scanner sc = new Scanner(new File("C:\\Users\\vfrunza\\320-Project\\src\\network-data\\routes.data"));
             //sc.useDelimiter(",");
-						BufferedReader csvReader = new BufferedReader(new FileReader("network-data/routes.data"));
+						BufferedReader csvReader = new BufferedReader(new FileReader("src/network-data/routes.data"));
 
             //while (sc.hasNext())
 						String row;
@@ -141,6 +141,18 @@ public class Flight { //this is similar to Java's Edge class
 		double arcLength = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
 
 		return 6371.009 * arcLength;
+	}
+
+	public static int distanceToDestination(Airport source, Airport destination){
+		double lat1 = source.getLatitude();
+		double lat2 = destination.getLatitude();
+		double lon1 = source.getLongitude();
+		double lon2 = destination.getLongitude();
+
+		double earthRadius = 6371.009;
+		double arcLength = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
+
+		return (int)(earthRadius * arcLength);
 	}
 
 }
