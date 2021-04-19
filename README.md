@@ -1,7 +1,7 @@
-# 320-Project
+## 320-Project
 Our own implementation of our designed algorithm to find the best flight in a flight network based on flight price, wait, and travel times.
 
-# To Run
+## To Run
 In order to run the flight pathfinder in an IDE, you must first change ther relative directory paths in the Airline, Airport, and Flight class as it is specific to each IDE. After that everything should work as intended.
 In order to run the flight pathfinder, first compile all files using the command (in Command Prompt terminal)
 
